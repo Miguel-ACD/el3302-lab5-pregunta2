@@ -38,6 +38,17 @@ La cuenta personal se puede usar para **publicar manualmente** el video descarga
 
 Publicar la imagen en GHCR y usar una máquina EC2 con Docker y Docker Compose. Clonar este repositorio, definir `.env`, abrir el puerto web y ejecutar `docker compose up --build -d`. El archivo Compose incluye la aplicación, el worker y la base de datos. Para la API de Instagram, servir la app y el video mediante HTTPS y fijar esa dirección en `PUBLIC_BASE_URL`.
 
+### Despliegue realizado
+
+- AWS `us-east-1`, instancia EC2 `i-0036d5352905ddc10`, tipo `t3.small`.
+- Aplicación comprobada: `http://ec2-44-200-3-4.compute-1.amazonaws.com:8001`.
+- Grupo de seguridad: `sg-04773258a1ec93386`, con el puerto 8001 abierto para la demostración.
+- Instalador: [deploy/aws-user-data.sh](deploy/aws-user-data.sh). Genera la contraseña de PostgreSQL y el PIN en la propia instancia.
+- Imagen publicada: `ghcr.io/miguel-acd/el3302-lab5-marketing:1.0`. La instancia construye el mismo código desde este repositorio porque el paquete de GHCR puede requerir autenticación.
+- Verificación: carga de foto, elección de guion, tres imágenes y video completaron con estado `ready` tanto en local como en EC2.
+
+La IP y el nombre DNS pueden cambiar si se detiene la instancia. La instancia y el almacenamiento pueden generar cargos mientras sigan activos.
+
 ## Evidencias
 
 Dockerfile, Compose y variables sin secretos; servicios activos; formulario con foto; tres guiones; guion elegido; estado de generación; tres imágenes; video en reproducción; filas de PostgreSQL; persistencia tras reiniciar; imagen en registro; app en AWS; publicación real en Instagram si se logra configurar la cuenta profesional y Meta.
