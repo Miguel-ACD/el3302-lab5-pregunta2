@@ -46,7 +46,7 @@ Publicar la imagen en GHCR y usar una máquina EC2 con Docker y Docker Compose. 
 - Aplicación comprobada: `http://ec2-44-200-3-4.compute-1.amazonaws.com:8001`.
 - Grupo de seguridad: `sg-04773258a1ec93386`, con el puerto 8001 abierto para la demostración.
 - Instalador: [deploy/aws-user-data.sh](deploy/aws-user-data.sh). Genera la contraseña de PostgreSQL y el PIN en la propia instancia.
-- Imagen publicada: `ghcr.io/miguel-acd/el3302-lab5-marketing:1.0`. La instancia construye el mismo código desde este repositorio porque el paquete de GHCR puede requerir autenticación.
+- Imagen publicada: `ghcr.io/miguel-acd/el3302-lab5-marketing:1.1`. La instancia construye el mismo código desde este repositorio porque el paquete de GHCR puede requerir autenticación.
 - Verificación: carga de foto, elección de guion, tres imágenes y video completaron con estado `ready` tanto en local como en EC2.
 
 La IP y el nombre DNS pueden cambiar si se detiene la instancia. La instancia y el almacenamiento pueden generar cargos mientras sigan activos.
