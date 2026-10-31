@@ -5,4 +5,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app ./app
 ENV PYTHONUNBUFFERED=1 PORT=8000
 EXPOSE 8000
-CMD ["gunicorn", "--workers", "2", "--timeout", "30", "--bind", "0.0.0.0:8000", "app.web:create_app()"]
+CMD ["gunicorn", "--worker-class", "gthread", "--workers", "1", "--threads", "4", "--timeout", "120", "--bind", "0.0.0.0:8000", "app.web:create_app()"]

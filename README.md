@@ -2,6 +2,8 @@
 
 Aplicación sencilla para una práctica académica. Recibe una foto, propone tres guiones, permite elegir uno y genera tres imágenes y un video MP4 de nueve segundos. La generación ocurre en un proceso aparte para que guardar no deje esperando al navegador.
 
+El servidor web usa hilos para recibir fotos en conexiones lentas sin que Gunicorn mate el proceso durante la carga. Si el archivo supera 8 MB se muestra un mensaje claro.
+
 ## Arquitectura
 
 ```mermaid
