@@ -1,0 +1,44 @@
+services:
+  web:
+    build: .
+    image: ${IMAGE_NAME:-lab5-marketing:local}
+    ports:
+      - "${APP_PORT:-8001}:8000"
+    environment: &app_env
+      DATABASE_URL: postgresql://${POSTGRES_USER:-lab5}:${POSTGRES_PASSWORD:-lab5local}@db:5432/${POSTGRES_DB:-marketing}
+      DATA_DIR: /data
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8001}
+      IG_USER_ID: ${IG_USER_ID:-}
+      IG_ACCESS_TOKEN: ${IG_ACCESS_TOKEN:-}
+      PUBLISH_PIN: ${PUBLISH_PIN:-}
+    volumes:
+      - media_data:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  worker:
+    build: .
+    command: ["python", "-m", "app.worker"]
+    environment: *app_env
+    volumes:
+      - media_data:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-lab5}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lab5local}
+      POSTGRES_DB: ${POSTGRES_DB:-marketing}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-lab5} -d ${POSTGRES_DB:-marketing}"]
+      interval: 3s
+      retries: 20
+volumes:
+  postgres_data:
+  media_data:
